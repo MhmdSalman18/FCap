@@ -1,24 +1,38 @@
-    package com.example.fcap.ui.main
+package com.example.fcap.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.fcap.ui.theme.FCapTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.room.Room
+import com.example.fcap.data.local.AppDatabase
+import com.example.fcap.data.repository.SessionRepository
+import com.example.fcap.ui.session.SessionScreen
+import com.example.fcap.viewmodel.SessionViewModel
+import com.example.fcap.viewmodel.SessionViewModelFactory
+
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent{
-            Text("FCap is running")
 
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "app_database"
+        ).build()
+
+        val dao = db.sessionDao()
+
+
+        val repository = SessionRepository(db.sessionDao())
+
+        val factory = SessionViewModelFactory(repository)
+
+        setContent {
+            val vm: SessionViewModel = viewModel(factory = factory)
+            SessionScreen(viewModel = vm)
         }
     }
 }
