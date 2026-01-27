@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.fcap.data.repository.SessionRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
 class SessionViewModel(
     private val repository: SessionRepository
@@ -14,6 +16,13 @@ class SessionViewModel(
 
     private val _state = MutableStateFlow(SessionState())
     val state: StateFlow<SessionState> = _state
+    val history = repository.getSessionHistory()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = emptyList()
+        )
+
 
     private var timerJob: Job? = null
 

@@ -9,7 +9,10 @@ import com.example.fcap.viewmodel.SessionStatus
 import com.example.fcap.viewmodel.SessionViewModel
 
 @Composable
-fun SessionScreen(viewModel: SessionViewModel) {
+fun SessionScreen(
+    viewModel: SessionViewModel,
+    onNavigateToHistory: () -> Unit
+) {
 
     val state by viewModel.state.collectAsState()
 
@@ -70,7 +73,14 @@ fun SessionScreen(viewModel: SessionViewModel) {
                 Button(onClick = viewModel::startSession) {
                     Text("Start New Session")
                 }
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(onClick = onNavigateToHistory) {
+                    Text("View History")
+                }
+
             }
+
         }
     }
 
