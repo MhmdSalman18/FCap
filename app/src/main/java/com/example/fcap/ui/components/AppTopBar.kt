@@ -2,6 +2,7 @@ package com.example.fcap.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -10,22 +11,19 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun AppTopBar(
     title: String,
-    showBack: Boolean = false,
-    onBackClick: () -> Unit = {}
+    onClearClick: (() -> Unit)? = null
 ) {
     TopAppBar(
         title = { Text(title) },
-        navigationIcon = {
-            if (showBack) {
-                IconButton(onClick = onBackClick) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+        actions = {
+            if (onClearClick != null) {
+                IconButton(onClick = onClearClick) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Clear History"
+                    )
                 }
             }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = Color.White,
-            navigationIconContentColor = Color.White
-        )
+        }
     )
 }

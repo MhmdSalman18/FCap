@@ -30,5 +30,6 @@ class MainActivity : ComponentActivity() {
             MainScreen(viewModel = vm)
 
         }
+
     }
 }

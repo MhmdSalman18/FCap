@@ -25,12 +25,22 @@ fun MainScreen(
 
     Scaffold(
         topBar = {
-            AppTopBar(title = "FCap")
+            AppTopBar(
+                title = "FCap",
+                onClearClick = {
+                    if (navController.currentDestination?.route == BottomNavItem.History.route) {
+                        viewModel.clearHistory()
+                    }
+                }
+            )
         },
         bottomBar = {
             AppBottomBar(navController)
         }
-    ) { padding ->
+    )
+
+
+    { padding ->
 
         NavHost(
             navController = navController,
@@ -57,10 +67,16 @@ fun MainScreen(
             }
 
             composable(BottomNavItem.History.route) {
+                val history by viewModel.history.collectAsState()
+
                 HistoryScreen(
-                    sessions = history
+                    sessions = history,
+                    onDelete = { session ->
+                        viewModel.deleteSession(session)
+                    }
                 )
             }
+
         }
     }
 }

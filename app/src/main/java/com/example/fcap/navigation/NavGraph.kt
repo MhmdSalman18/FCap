@@ -30,8 +30,12 @@ fun NavGraph(
 
         composable(NavRoutes.History.route) {
             HistoryScreen(
-                sessions = viewModel.history.collectAsState().value
+                sessions = viewModel.history.collectAsState().value,
+                onDelete = { session ->
+                    viewModel.deleteSession(session)
+                }
             )
         }
+
     }
 }

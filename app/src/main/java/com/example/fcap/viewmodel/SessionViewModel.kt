@@ -2,6 +2,7 @@ package com.example.fcap.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fcap.data.local.SessionEntity
 import com.example.fcap.data.repository.SessionRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -77,6 +78,16 @@ class SessionViewModel(
                     )
                 }
             }
+        }
+    }
+    fun clearHistory(){
+        viewModelScope.launch {
+            repository.clearHistory()
+        }
+    }
+    fun deleteSession(session: SessionEntity){
+        viewModelScope.launch {
+            repository.deleteSession(session)
         }
     }
 

@@ -16,5 +16,8 @@ data class SessionState (
     val status: SessionStatus = SessionStatus.IDLE,
     val elapsedSeconds: Long = 0L,
     val targetSeconds: Long = 6L,
-    val result: SessionResult = SessionResult.NONE
+    val result: SessionResult = SessionResult.NONE,
+    val isRunning: Boolean = false,
+    val formattedTime: String = "00:00",
+    val todayMinutes: Int = 0
 )

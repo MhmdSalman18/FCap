@@ -1,6 +1,7 @@
 package com.example.fcap.data.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
@@ -13,4 +14,10 @@ interface SessionDao {
 
     @Query("SELECT * FROM sessions ORDER BY timestamp DESC")
     fun getAllSessions(): Flow<List<SessionEntity>>
+
+    @Query("DELETE FROM sessions")
+    suspend fun deleteAll()
+
+    @Delete
+    suspend fun deleteSession(session: SessionEntity)
 }

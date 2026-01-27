@@ -10,6 +10,18 @@ import kotlin.time.Duration
 class SessionRepository (
     private val dao: SessionDao
 ){
+
+    val history = dao.getAllSessions()
+    suspend fun insert(session: SessionEntity){
+        dao.insertSession(session)
+    }
+    suspend fun clearHistory(){
+        dao.deleteAll()
+    }
+    suspend fun deleteSession(session: SessionEntity){
+        dao.deleteSession(session)
+    }
+
     suspend fun saveSession(
         durationSeconds: Long,
         result: SessionResult
